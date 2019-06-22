@@ -4,7 +4,8 @@
   "description": "Deck created with mdx-deck",
   "scripts": {
     "start": "mdx-deck deck.mdx",
-    "build": "mdx-deck build deck.mdx",
+    "copy": "cp dist/index.html dist/200.html && cp -R images dist/images",
+    "build": "mdx-deck build deck.mdx && npm run copy",
     "pdf": "mdx-deck pdf deck.mdx",
     "image": "mdx-deck screenshot deck.mdx",
     "help": "mdx-deck"
@@ -15,5 +16,8 @@
   "devDependencies": {
     "mdx-deck": "^1.6.7"
   },
-  "name": "generated-mdx"
+  "name": "mdx-palomitas",
+  "dependencies": {
+    "styled-components": "^4.3.2"
+  }
 }

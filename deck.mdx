@@ -1,23 +1,248 @@
-import { Head } from 'mdx-deck'
+import { Head, Notes, Appear, Image } from 'mdx-deck'
+import Flex from './Flex';
 
 export { default as theme } from './theme'
 
 <Head>
-  <title>Presentation Title</title>
+  <title>Palomitas: torrent streaming</title>
 </Head>
 
-# Hello
+# Palomitas: <small>torrent streaming</small>
+o como intenté montarme mi propio Netflix
 
 ---
 
-## Edit this file
+# ⚠️ Disclaimer ⚠️
 
-To create your presentation
+* Este proyecto se muestra unicamente con fines educativos
+* Este proyecto no esta preparado para usarse en un entorno de producción
+* El presentador no se hace responsable del uso que se de a esta tecnología
+* El presentador no representa a nadie más que a si mismo
 
-```notes
-- Create speaker notes in fenced code blocks
+---
+
+<https://charla-palomitas.surge.sh>
+
+---
+
+<img style={{width: 160, borderRadius: '50%', display: 'block', margin: '0 auto'}} src="https://avatars2.githubusercontent.com/u/6652814" />
+
+Juan D. Jara
+
+twitter @_juandjara
+
+github @juandjara
+
+Front-end @ Geographica (CARTO)
+
+---
+
+* ¿Por qué?
+* Las series online
+* Qué podemos hacer
+* Qué tenemos
+* Torrent-stream
+* Downloader API
+* Streaming
+* The Big Picture
+* Subtitulos
+* Limitaciones
+* Qué falta
+* Preguntas
+
+---
+
+## ¿Por qué? 🤔
+
+<Notes>
+  Hace unos años yo queria verme una serie. Pero no estaba en Netflix. Así que me puse a buscar. Y todo lo que encontré fueron anuncios y más anuncios. Publicidad en toa tu cara. Pulsa aqui y espera cinco segundos, desactiva el adblocker, etc, etc...
+
+  Y pensé: Debe haber una manera mejor de hacer esto
+</Notes>
+
+---
+
+## Series online
+
+<Appear>
+  <p>Anuncios en tu cara</p>
+  <p>Tapando todo el contenido</p>
+  <p>Diciendote que esperes 5 segundos y pulses no se donde</p>
+  <p>y que desactives el adblocker porfa</p>
+</Appear>
+
+---
+
+<Image src="images/TODO_MAL_2.jpg" />
+
+---
+
+## ¿Qué podemos hacer?
+
+<Appear>
+  <p>Somos programadores</p>
+  <p>Tenemos herramientas</p>
+  <p>Mas como en internet no hay buenas web</p>
+  <p>cantamos canciones</p>
+</Appear>
+
+---
+
+## ¿Qué tenemos?
+
+<Flex>
+  {/* <img style={{width: '33%', maxWidth: '100%', margin: '2em'}}
+    src="./logos/HTML5.svg" />
+  <img style={{width: '33%', maxWidth: '100%', margin: '2em'}}
+    src="./logos/nodejs.svg" /> */}
+  <img src="images/logos/npm.png" />
+</Flex>
+
+---
+
+## Torrent-stream
+
+* hecho por @mafintosh
+* archivos torrent como streams de node
+* puedes priorizar la descarga de las partes del torrent que quieras segun estes reproduciendo el video
+
+---
+
+<Image size="50%" src="images/magic.webp" />
+
+---
+
+<Image src="images/downloader.png" />
+
+---
+
+## Downloader API 🔌🔌 
+[`juandjara/palomitas-dl`](https://github.com/juandjara/palomitas-dl)
+
+---
+
+```
+POST /torrents {"link": "magnet: ..."}
 ```
 
 ---
 
-<https://github.com/jxnblk/mdx-deck>
+```
+GET /torrents
+GET /torrents/:hash/files
+GET /torrents/:hash/files/:filename
+```
+
+---
+
+# Streaming
+
+<Flex>
+  <img height="150" src="images/logos/nodejs.svg" />
+  <p style={{padding: '1rem 2rem', fontSize: '3em'}}> is ❤️ </p>  
+</Flex>
+
+---
+
+## Streaming
+
+<img height="150" src="images/logos/ffmpeg.png" />
+
+`GET /torrents/:hash/files/:filename?transform=remux`
+
+Transforma un video a WEBM _on the fly_*
+<small>* Esto tiene sus limitaciones</small>
+
+---
+
+![](images/logos/websocket.png)
+### WebSockets
+
+* stats
+* ready
+* interested
+* download
+* finished
+
+---
+
+Todo esto está muy bien, pero...
+
+---
+
+<Image size="50%" src="images/queyolovea.jpg" />
+
+---
+
+## The Big Picture
+
+---
+
+<Image size="90%" src="images/palomitas-diagram.png" />
+
+---
+
+## Palomitas
+[`juandjara/palomitas`](https://github.com/juandjara/palomitas)
+
+---
+
+## Subtitulos en Palomitas
+
+---
+
+## Mas magia de npm
+
+`opensubtitles-api`
+* wrapper sobre la API XML de opensubtitles
+* permite buscar subtitulos por lenguaje, temporada, episodio y ID de IMDB
+
+`apicache`
+* añade una capa de cacheado generico como middleware de un servidor express.js tan facil como `app.use(apicache('2 hours'))`
+
+---
+
+## API de Subtitulos
+[`juandjara/sub-down`](https://github.com/juandjara/sub-down)
+
+* API REST construdida sobre `opensubtitles-api`
+* permite buscar los subtitulos para un episodio concreto o buscar por texto libre
+* permite convertir los subtitulos a VTT teniendo en cuenta los distintos encodings 
+
+---
+
+## Dibujitos
+[`juandjara/dibujitos`](https://github.com/juandjara/dibujitos)
+
+---
+
+## Subtitulos en Dibujitos
+
+<img height="150" src="images/logos/ffmpeg.png" />
+
+`GET /torrents/:hash/files/:filename?transform=subs`
+
+Extrae los subtitulos de un archivo de video*
+<small>* Necesita que el archivo de video este descargado entero</small>
+
+---
+
+# Limitaciones
+
+* Los navegadores son muy tiquismiquis.
+
+---
+
+# Qué falta
+
+* Front-end unificado con multiples catalogos
+* Mejorar el proceso de streaming
+* Integracion con WebTorrent
+
+---
+
+# ¿Preguntas?
+
+---
+
+# GRACIAS :clap: :clap:
