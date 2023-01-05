@@ -14,7 +14,7 @@
   "author": "Brent Jackson",
   "license": "MIT",
   "devDependencies": {
-    "mdx-deck": "^1.6.7"
+    "mdx-deck": "^1.10.2"
   },
   "name": "mdx-palomitas",
   "dependencies": {
